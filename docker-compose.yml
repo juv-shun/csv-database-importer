@@ -4,4 +4,7 @@ services:
   app:
     container_name: s3-event-trigger-fargate
     build: .
-    command: "python app/main.py"
+    environment:
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+    command: "python app/main.py --bucket $S3_BUCKET --object $S3_OBJECT"
