@@ -77,7 +77,7 @@ resource "aws_iam_role_policy" "ecs_run_policy" {
       {
         Action   = "ecs:RunTask"
         Effect   = "Allow"
-        Resource = "arn:aws:ecs:ap-northeast-1:100994446770:task-definition/${var.service_name}:*"
+        Resource = aws_ecs_task_definition.task_def.arn
       },
       {
         Action = [
@@ -94,7 +94,7 @@ resource "aws_iam_role_policy" "ecs_run_policy" {
           "events:DescribeRule",
         ]
         Effect   = "Allow"
-        Resource = "arn:aws:events:ap-northeast-1:100994446770:rule/StepFunctionsGetEventsForECSTaskRule"
+        Resource = "arn:aws:events:ap-northeast-1:${data.aws_caller_identity.aws_identity.account_id}:rule/StepFunctionsGetEventsForECSTaskRule"
       },
       {
         Action = [
