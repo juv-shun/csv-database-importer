@@ -15,3 +15,5 @@ provider "aws" {
 variable "service_name" {
   default = "csv-database-importer"
 }
+
+variable "db_password" {}

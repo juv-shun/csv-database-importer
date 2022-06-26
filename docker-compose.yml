@@ -5,6 +5,10 @@ services:
     container_name: csv-database-importer
     build: .
     environment:
+      DB_HOST: host.docker.internal
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_NAME: test
       AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
       AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
     command: "python app/main.py --bucket $S3_BUCKET --object $S3_OBJECT"

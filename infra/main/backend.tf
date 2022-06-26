@@ -30,3 +30,11 @@ data "terraform_remote_state" "network" {
 }
 
 data "aws_caller_identity" "aws_identity" {}
+
+variable "task_def_environments" {
+  default = {
+    db_host = ""
+    db_user = ""
+    db_name = ""
+  }
+}

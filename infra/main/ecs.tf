@@ -43,10 +43,29 @@ resource "aws_ecs_task_definition" "task_def" {
   container_definitions = jsonencode(
     [
       {
-        name        = "app"
-        image       = "${aws_ecr_repository.ecr.repository_url}:latest"
-        essential   = true
-        environment = []
+        name      = "app"
+        image     = "${aws_ecr_repository.ecr.repository_url}:latest"
+        essential = true
+        environment = [
+          {
+            name  = "DB_HOST"
+            value = var.task_def_environments.db_host
+          },
+          {
+            name  = "DB_USER"
+            value = var.task_def_environments.db_user
+          },
+          {
+            name  = "DB_NAME"
+            value = var.task_def_environments.db_name
+          }
+        ]
+        secrets = [
+          {
+            name      = "DB_PASSWORD"
+            valueFrom = "/${var.service_name}/DB_PASSWORD"
+          },
+        ]
         logConfiguration = {
           logDriver = "awslogs"
           options = {
@@ -67,6 +86,21 @@ resource "aws_iam_role" "task_exe_role" {
   name               = "${var.service_name}-task-exe-role"
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.ecs_assume_policy.json
+}
+
+resource "aws_iam_role_policy" "task_exe_role_policy" {
+  name = "GetParamPolicy"
+  role = aws_iam_role.task_exe_role.name
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = "ssm:GetParameters"
+        Effect   = "Allow"
+        Resource = "arn:aws:ssm:ap-northeast-1:${data.aws_caller_identity.aws_identity.account_id}:parameter/${var.service_name}/*"
+      }
+    ]
+  })
 }
 
 resource "aws_iam_role" "task_role" {
