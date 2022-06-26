@@ -6,8 +6,9 @@ resource "aws_sfn_state_machine" "state_machine" {
   role_arn = aws_iam_role.state_machine.arn
 
   definition = jsonencode({
-    Comment = "Run an ECS task"
-    StartAt = "GenerateCommands"
+    Comment        = "Run an ECS task"
+    StartAt        = "GenerateCommands"
+    TimeoutSeconds = 1800
     States = {
       GenerateCommands = {
         Type = "Pass"
@@ -42,7 +43,20 @@ resource "aws_sfn_state_machine" "state_machine" {
             ]
           }
         }
-        End = true
+        Catch = [
+          {
+            ErrorEquals = ["States.ALL"]
+            Comment     = "Error"
+            Next        = "Fail"
+          }
+        ]
+        Next = "Success"
+      }
+      Success = {
+        Type = "Succeed"
+      }
+      Fail = {
+        Type = "Fail"
       }
     }
   })
