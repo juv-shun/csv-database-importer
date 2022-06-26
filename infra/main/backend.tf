@@ -16,7 +16,9 @@ variable "service_name" {
   default = "csv-database-importer"
 }
 
-variable "s3_bucket" {}
+variable "s3_bucket" {
+  default = "juv-shun.csv-database-importer"
+}
 
 data "terraform_remote_state" "network" {
   backend = "s3"
