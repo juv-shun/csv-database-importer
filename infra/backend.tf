@@ -3,7 +3,7 @@ terraform {
 
   backend "s3" {
     bucket = "juv-shun.tfstate"
-    key    = "s3-event-trigger-fargate/tfstate.tf"
+    key    = "csv-database-importer/tfstate.tf"
     region = "ap-northeast-1"
   }
 }
@@ -13,7 +13,7 @@ provider "aws" {
 }
 
 variable "service_name" {
-  default = "s3-event-trigger-fargate"
+  default = "csv-database-importer"
 }
 
 variable "s3_bucket" {}

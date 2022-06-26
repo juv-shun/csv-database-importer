@@ -77,7 +77,7 @@ resource "aws_iam_role_policy" "ecs_run_policy" {
       {
         Action   = "ecs:RunTask"
         Effect   = "Allow"
-        Resource = "arn:aws:ecs:ap-northeast-1:100994446770:task-definition/s3-event-trigger-fargate:*"
+        Resource = "arn:aws:ecs:ap-northeast-1:100994446770:task-definition/${var.service_name}:*"
       },
       {
         Action = [

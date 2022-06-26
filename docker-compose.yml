@@ -2,7 +2,7 @@ version: "3"
 
 services:
   app:
-    container_name: s3-event-trigger-fargate
+    container_name: csv-database-importer
     build: .
     environment:
       AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID

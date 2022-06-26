@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "s3-event-trigger-fargate"
+name = "csv-database-importer"
 version = "0.1.0"
 description = ""
 authors = ["Shun Fukusumi <shun.fukusumi@gmail.com>"]
