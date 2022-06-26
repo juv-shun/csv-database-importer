@@ -17,3 +17,12 @@ variable "service_name" {
 }
 
 variable "s3_bucket" {}
+
+data "terraform_remote_state" "network" {
+  backend = "s3"
+  config = {
+    bucket = "juv-shun.tfstate"
+    key    = "csv-database-importer/external/tfstate.tf"
+    region = "ap-northeast-1"
+  }
+}

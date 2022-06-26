@@ -1,7 +1,7 @@
 #####################################
 # VPC Settings
 #####################################
-resource "aws_vpc" "vpc" {
+resource "aws_vpc" "default" {
   cidr_block           = "172.16.0.0/16"
   instance_tenancy     = "default"
   enable_dns_support   = true
@@ -16,7 +16,7 @@ resource "aws_vpc" "vpc" {
 # Public Subnets Settings
 #####################################
 resource "aws_subnet" "public_subnet_az1" {
-  vpc_id            = aws_vpc.vpc.id
+  vpc_id            = aws_vpc.default.id
   cidr_block        = "172.16.1.0/24"
   availability_zone = "ap-northeast-1a"
 
@@ -26,7 +26,7 @@ resource "aws_subnet" "public_subnet_az1" {
 }
 
 resource "aws_subnet" "public_subnet_az2" {
-  vpc_id            = aws_vpc.vpc.id
+  vpc_id            = aws_vpc.default.id
   cidr_block        = "172.16.2.0/24"
   availability_zone = "ap-northeast-1c"
 
@@ -39,7 +39,7 @@ resource "aws_subnet" "public_subnet_az2" {
 # Private Subnets Settings
 #####################################
 resource "aws_subnet" "private_subnet_az1" {
-  vpc_id            = aws_vpc.vpc.id
+  vpc_id            = aws_vpc.default.id
   cidr_block        = "172.16.3.0/24"
   availability_zone = "ap-northeast-1a"
 
@@ -49,7 +49,7 @@ resource "aws_subnet" "private_subnet_az1" {
 }
 
 resource "aws_subnet" "private_subnet_az2" {
-  vpc_id            = aws_vpc.vpc.id
+  vpc_id            = aws_vpc.default.id
   cidr_block        = "172.16.4.0/24"
   availability_zone = "ap-northeast-1c"
 
@@ -62,7 +62,7 @@ resource "aws_subnet" "private_subnet_az2" {
 # Internet Gateway Settings
 #####################################
 resource "aws_internet_gateway" "i_gw" {
-  vpc_id = aws_vpc.vpc.id
+  vpc_id = aws_vpc.default.id
   tags = {
     Name = var.service_name
   }
@@ -72,7 +72,7 @@ resource "aws_internet_gateway" "i_gw" {
 # Routes Table Settings
 #####################################
 resource "aws_route_table" "igw_route" {
-  vpc_id = aws_vpc.vpc.id
+  vpc_id = aws_vpc.default.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -101,7 +101,7 @@ resource "aws_route_table_association" "i_gw_association_az2" {
 # Security Group
 #####################################
 resource "aws_default_security_group" "default" {
-  vpc_id = aws_vpc.vpc.id
+  vpc_id = aws_vpc.default.id
 
   ingress {
     protocol  = -1

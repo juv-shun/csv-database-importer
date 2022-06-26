@@ -26,10 +26,10 @@ resource "aws_sfn_state_machine" "state_machine" {
           NetworkConfiguration = {
             AwsvpcConfiguration = {
               Subnets = [
-                aws_subnet.public_subnet_az1.id,
-                aws_subnet.public_subnet_az2.id,
+                data.terraform_remote_state.network.outputs.vpc_settings.public_subnet_az1,
+                data.terraform_remote_state.network.outputs.vpc_settings.public_subnet_az2,
               ]
-              SecurityGroups = [aws_default_security_group.default.id]
+              SecurityGroups = [data.terraform_remote_state.network.outputs.vpc_settings.default_security_group]
               AssignPublicIp = "ENABLED"
             }
           }
