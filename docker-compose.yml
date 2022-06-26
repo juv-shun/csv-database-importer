@@ -8,3 +8,21 @@ services:
       AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
       AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
     command: "python app/main.py --bucket $S3_BUCKET --object $S3_OBJECT"
+
+  db:
+    image: mysql:5.7
+    platform: linux/x86_64
+    container_name: csv-database-importer-db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: test
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: Asia/Tokyo
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./local_db/data:/var/lib/mysql
+      - ./local_db/conf/test.cnf:/etc/mysql/conf.d/my.cnf
+      - ./local_db/init:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
