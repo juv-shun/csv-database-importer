@@ -43,16 +43,16 @@ resource "aws_ecs_task_definition" "task_def" {
   container_definitions = jsonencode(
     [
       {
-        "name" : "app",
-        "image" : "${aws_ecr_repository.ecr.repository_url}:latest",
-        "essential" : true,
-        "environment" : [],
-        "logConfiguration" : {
-          "logDriver" : "awslogs",
-          "options" : {
-            "awslogs-group" : "/aws/ecs/${var.service_name}",
-            "awslogs-region" : "ap-northeast-1",
-            "awslogs-stream-prefix" : "app"
+        name        = "app"
+        image       = "${aws_ecr_repository.ecr.repository_url}:latest"
+        essential   = true
+        environment = []
+        logConfiguration = {
+          logDriver = "awslogs"
+          options = {
+            awslogs-group         = "/aws/ecs/${var.service_name}"
+            awslogs-region        = "ap-northeast-1"
+            awslogs-stream-prefix = "app"
           }
         }
       }
