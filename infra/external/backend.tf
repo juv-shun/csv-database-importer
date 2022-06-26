@@ -17,3 +17,7 @@ variable "service_name" {
 }
 
 variable "db_password" {}
+
+variable "bastion_key_name" {
+  default = "general"
+}
