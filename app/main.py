@@ -1,16 +1,14 @@
 import argparse
+
 import boto3
 from botocore.config import Config
-
 from db import connection
 
-boto3_config = Config(
-    connect_timeout=10, retries={"max_attempts": 3, "mode": "standard"}
-)
+boto3_config = Config(connect_timeout=10, retries={"max_attempts": 3, "mode": "standard"})
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--bucket')
-parser.add_argument('--object')
+parser.add_argument("--bucket")
+parser.add_argument("--object")
 
 if __name__ == "__main__":
     args = parser.parse_args()

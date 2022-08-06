@@ -1,4 +1,5 @@
 import os
+
 import pymysql
 
 DB_HOST = os.environ["DB_HOST"]

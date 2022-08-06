@@ -11,3 +11,12 @@ push:
 			--username AWS \
 			--password-stdin https://${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com \
 	&& docker push ${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/csv-database-importer:latest
+
+lint:
+	flake8 --max-line-length=120 app
+	isort --check --diff app
+	black --check app
+
+format:
+	isort app
+	black app
